@@ -45,5 +45,10 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         // Implement logic to delete user by id
     }
+
+    @GetMapping("/test")
+    public String testDatabaseConnection() {
+        return "Database connection is successful!";
+    }
 }
 
