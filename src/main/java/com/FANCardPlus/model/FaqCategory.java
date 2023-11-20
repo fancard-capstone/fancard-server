@@ -8,27 +8,27 @@ public class FaqCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FAQ_Category_id")
-    private Long faqCategoryId;
+    private Long faqCategory;
 
-    public Long getFaqCategoryId() {
-        return faqCategoryId;
+    public Long getfaqCategory() {
+        return faqCategory;
     }
 
-    public void setFaqCategoryId(Long faqCategoryId) {
-        this.faqCategoryId = faqCategoryId;
+    public void setfaqCategory(Long faqCategory) {
+        this.faqCategory = faqCategory;
     }
 
     ///
 
     @Column(name = "name", unique = true)
-    private String faqCategory;
+    private String faqCategoryName;
 
-    public String getFaqCategory() {
-        return faqCategory;
+    public String getfaqCategoryName() {
+        return faqCategoryName;
     }
 
-    public void setFaqCategory(String faqCategory) {
-        this.faqCategory = faqCategory;
+    public void setfaqCategoryName(String faqCategoryName) {
+        this.faqCategoryName = faqCategoryName;
     }
 
     ///

@@ -3,11 +3,11 @@ package com.FANCardPlus.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "faq")
+@Table(name = "FAQ", schema="dbo")
 public class Faq {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "faq_id")
+    @Column(name = "FAQ_ID")
     private Long faqId;
 
     public Long getFaqId() {
@@ -21,15 +21,15 @@ public class Faq {
     ///
 
     @ManyToOne
-    @JoinColumn(name = "faq_category_id", nullable = false)
-    private FaqCategory faqCategoryId;
+    @JoinColumn(name = "FAQ_Category_id", nullable = false)
+    private FaqCategory faqCategory; 
 
-    public FaqCategory getFaqCategoryId() {
-        return faqCategoryId;
+    public FaqCategory getFaqCategory() {
+        return faqCategory;
     }
 
-    public void setFaqCategoryId(FaqCategory faqCategoryId) {
-        this.faqCategoryId = faqCategoryId;
+    public void setFaqCategory(FaqCategory faqCategory) {
+        this.faqCategory = faqCategory;
     }
 
     ///
