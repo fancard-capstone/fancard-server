@@ -28,40 +28,31 @@ public class FaqController {
         return FaqRepository.findAll();
     }
 
-    // @PostMapping
-    // public ResponseEntity<Faq> createFaq(@RequestBody Faq Faq) {
-    //     // Check if the specified Faq category ID exists
-    //     Optional<FaqCategory> optionalCategory = FaqCategoryRepository.findById(Faq.getFaqCategoryId().getFaqCategoryId());
-    //     if (optionalCategory.isPresent()) {
-    //         // If the category exists, save the Faq
-    //         Faq.setFaqCategoryId(optionalCategory.get());
-    //         Faq savedFaq = FaqRepository.save(Faq);
-    //         return ResponseEntity.ok(savedFaq);
-    //     } else {
-    //         // If the category does not exist, return an error response
-    //         return ResponseEntity.badRequest().build();
-    //     }
-    // }
     @PostMapping
-public ResponseEntity<Faq> createFaq(@RequestBody Faq faq) {
-    // Check if the specified Faq category ID exists
-    if (faq.getFaqCategory() != null) {
-        Optional<FaqCategory> optionalCategory = FaqCategoryRepository.findById(faq.getFaqCategory().getfaqCategory());
-        System.out.println("Category ID:" + optionalCategory.get());
+    public ResponseEntity<Faq> createFaq(@RequestBody Faq Faq) {
+        // Check if the specified Faq category ID exists
+        Optional<FaqCategory> optionalCategory = FaqCategoryRepository.findById(Faq.getFaqCategory().getfaqCategory());
         if (optionalCategory.isPresent()) {
             // If the category exists, save the Faq
-            faq.setFaqCategory(optionalCategory.get());
-            Faq savedFaq = FaqRepository.save(faq);
+            Faq.setFaqCategory(optionalCategory.get());
+            Faq savedFaq = FaqRepository.save(Faq);
             return ResponseEntity.ok(savedFaq);
         } else {
             // If the category does not exist, return an error response
             return ResponseEntity.badRequest().build();
         }
-    } else {
-        // If the faqCategory is null, return an error response
-        return ResponseEntity.badRequest().build();
     }
-}
+    /*
+        {
+            "faqCategory": {
+                "faqCategory": 2
+            },
+            "question": "What is your product?",
+            "answer": "Our product is..."
+        }
+     */
+
+
 
 
     // Other CRUD operations for Faq
