@@ -3,7 +3,7 @@ package com.FANCardPlus.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema="dbo")
 public class User {
 
     @Id

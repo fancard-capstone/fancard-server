@@ -3,7 +3,11 @@ package com.FANCardPlus.controller;
 import com.FANCardPlus.model.User;
 import com.FANCardPlus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
 
 import java.util.List;
 
@@ -28,27 +32,51 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        User user = new User();
-        // Implement logic to find and return user by id
-        return user;
-    }
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User user = new User();
-        // Implement logic to update user by id
-        return user;
+        return optionalUser.map(ResponseEntity::ok)
+                           .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
+
+            // Update user properties with values from the updatedUser
+            existingUser.setUserName(updatedUser.getUserName());
+            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setAddress(updatedUser.getAddress());
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setFirstName(updatedUser.getFirstName());
+            existingUser.setLastName(updatedUser.getLastName());
+            existingUser.setImageUrl(updatedUser.getImageUrl());
+            existingUser.setIsActive(updatedUser.getIsActive());
+            existingUser.setNfcId(updatedUser.getNfcId());
+            // Update other properties as needed
+
+            User savedUser = userRepository.save(existingUser);
+            return ResponseEntity.ok(savedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        // Implement logic to delete user by id
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/test")
-    public String testDatabaseConnection() {
-        return "Database connection is successful!";
-    }
 }
 
