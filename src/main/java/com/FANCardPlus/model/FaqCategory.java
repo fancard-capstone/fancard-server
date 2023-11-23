@@ -10,11 +10,11 @@ public class FaqCategory {
     @Column(name = "FAQ_Category_id")
     private Long faqCategory;
 
-    public Long getfaqCategory() {
+    public Long getFaqCategory() {
         return faqCategory;
     }
 
-    public void setfaqCategory(Long faqCategory) {
+    public void setFaqCategory(Long faqCategory) {
         this.faqCategory = faqCategory;
     }
 
@@ -23,11 +23,11 @@ public class FaqCategory {
     @Column(name = "name", unique = true)
     private String faqCategoryName;
 
-    public String getfaqCategoryName() {
+    public String getFaqCategoryName() {
         return faqCategoryName;
     }
 
-    public void setfaqCategoryName(String faqCategoryName) {
+    public void setFaqCategoryName(String faqCategoryName) {
         this.faqCategoryName = faqCategoryName;
     }
 
