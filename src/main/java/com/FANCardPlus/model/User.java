@@ -1,6 +1,7 @@
 package com.FANCardPlus.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user", schema="dbo")
@@ -30,6 +31,19 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    ///
+
+    @Column(name="issued_on", columnDefinition = "timestamp")
+    private Date issuedOn;
+
+    public Date getIssuedOn() {
+        return issuedOn;
+    }
+
+    public void setIssuedOn(Date issuedOn) {
+        this.issuedOn = issuedOn;
     }
 
     ///

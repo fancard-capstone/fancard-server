@@ -32,9 +32,14 @@ Create table dbo.user(
     first_name varchar(50), 
     last_name varchar(50), 
     image_url varchar(80), 
-    is_active boouser_idlean default FALSE, 
+    is_active boolean default FALSE, 
+    issued_on DATE DEFAULT current_date,
     NFC_ID int
 );
+
+ALTER TABLE dbo.user
+ADD COLUMN issued_on DATE DEFAULT current_date;
+
 
 -- Creating transcation category 
 create table dbo.Transaction_category (
