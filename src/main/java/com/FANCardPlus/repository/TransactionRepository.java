@@ -8,5 +8,5 @@ import com.FANCardPlus.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByUserId(User user);
+    List<Transaction> findByUser(User user);
 }

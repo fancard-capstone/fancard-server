@@ -21,26 +21,26 @@ public class Role {
     ///
 
     @Column(name = "name", columnDefinition = "TEXT")
-    private String name;
+    private String roleName;
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     ///
     
     @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+    private String roleDescription;
 
-    public String getDescription() {
-        return description;
+    public String getRoleDescription() {
+        return roleDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
     }
 }

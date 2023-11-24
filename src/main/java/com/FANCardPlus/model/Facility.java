@@ -44,4 +44,18 @@ public class Facility {
         this.facilityDescription = facilityDescription;
     }
 
+    ///
+
+    @ManyToOne
+    @JoinColumn(name = "permission_id", nullable = false)
+    private Permission permission; 
+
+    public Permission getPermission() {
+        return permission;
+    }
+
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
 }

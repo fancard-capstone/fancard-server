@@ -21,26 +21,26 @@ public class Permission {
     ///
 
     @Column(name = "name", columnDefinition = "TEXT")
-    private String name;
+    private String permissionName;
 
-    public String getName() {
-        return name;
+    public String getPermissionName() {
+        return permissionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String permissionName) {
+        this.permissionName = permissionName;
     }
 
     ///
     
     @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+    private String permissionDescription;
 
-    public String getDescription() {
-        return description;
+    public String getPermissionDescription() {
+        return permissionDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPermissionDescription(String permissionDescription) {
+        this.permissionDescription = permissionDescription;
     }
 }

@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User validateCredentials(@RequestBody User loginCredentials) {
+    public ResponseEntity<User> validateCredentials(@RequestBody User loginCredentials) {
         String email = loginCredentials.getEmail();
         String password = loginCredentials.getPassword();
 
@@ -42,9 +42,9 @@ public class UserController {
 
         if (isValid != null) {
             User user = userRepository.findByUserId(isValid);
-            return user;
+            return ResponseEntity.ok(user);
         } else {
-            return null;
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -88,7 +88,6 @@ public class UserController {
             existingUser.setImageUrl(updatedUser.getImageUrl());
             existingUser.setIsActive(updatedUser.getIsActive());
             existingUser.setNfcId(updatedUser.getNfcId());
-            // Update other properties as needed
 
             User savedUser = userRepository.save(existingUser);
             return ResponseEntity.ok(savedUser);

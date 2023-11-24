@@ -50,24 +50,31 @@ public class TransactionController {
     public ResponseEntity<String> createTransactionByUser(@RequestBody Transaction transaction, @PathVariable Long userId) {
         Optional<TransactionCategory> checkCategory = transactionCategoryRepository.findById(transaction.getTransactionCategory().getTansactionCategoryId());
         Optional<User> checkUser = userRepository.findById(userId);
-        Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacilityId().getFacilityId());
-
-        if(checkUser.isPresent() && checkCategory.isPresent() && checkFacility.isPresent()) {
-            transaction.setUserId(checkUser.get());
-            transactionRepository.save(transaction);
-            return ResponseEntity.ok("Transaction added");
+        Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacility().getFacilityId()); 
+        
+        if (hasPermission()) {
+            if (checkUser.isPresent() && checkCategory.isPresent() && checkFacility.isPresent()) {
+                transaction.setUser(checkUser.get());
+                transactionRepository.save(transaction);
+                return ResponseEntity.ok("Transaction added");
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed");
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed to record");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed");
         }
-
     }
+
+    private boolean hasPermission(){
+        return true;
+    };
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Transaction>> getTransactionsByUser(@PathVariable Long userId) {
         Optional<User> user = userRepository.findById(userId);
 
         if (user.isPresent()) {
-            List<Transaction> transactionsByUser = transactionRepository.findByUserId(user.get());
+            List<Transaction> transactionsByUser = transactionRepository.findByUser(user.get());
             return ResponseEntity.ok(transactionsByUser);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
