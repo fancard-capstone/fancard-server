@@ -46,18 +46,31 @@ public class TransactionController {
         return transactionRepository.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<String> createTransaction(@RequestBody Transaction transaction) {
+    @PostMapping("/{userId}")
+    public ResponseEntity<String> createTransactionByUser(@RequestBody Transaction transaction, @PathVariable Long userId) {
         Optional<TransactionCategory> checkCategory = transactionCategoryRepository.findById(transaction.getTransactionCategory().getTansactionCategoryId());
-        Optional<User> checkUser = userRepository.findById(transaction.getUserId().getUserId());
+        Optional<User> checkUser = userRepository.findById(userId);
         Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacilityId().getFacilityId());
 
         if(checkUser.isPresent() && checkCategory.isPresent() && checkFacility.isPresent()) {
+            transaction.setUserId(checkUser.get());
             transactionRepository.save(transaction);
             return ResponseEntity.ok("Transaction added");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed to record");
         }
 
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Transaction>> getTransactionsByUser(@PathVariable Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isPresent()) {
+            List<Transaction> transactionsByUser = transactionRepository.findByUserId(user.get());
+            return ResponseEntity.ok(transactionsByUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }
