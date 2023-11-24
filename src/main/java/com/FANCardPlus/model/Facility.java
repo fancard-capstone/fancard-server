@@ -2,7 +2,7 @@ package com.FANCardPlus.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Facilities")
+@Table(name = "Facilities", schema="dbo")
 public class Facility {
 
     @Id

@@ -39,7 +39,7 @@ public class FaqController {
             return ResponseEntity.ok(savedFaq);
         } else {
             // If the category does not exist, return an error response
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
     /*

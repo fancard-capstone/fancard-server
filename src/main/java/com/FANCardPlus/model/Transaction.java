@@ -1,8 +1,9 @@
 package com.FANCardPlus.model;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Transaction")
+@Table(name = "Transaction", schema="dbo")
 public class Transaction {
 
     @Id
@@ -24,7 +25,7 @@ public class Transaction {
     @JoinColumn(name = "transaction_category_id", nullable = false)
     private TransactionCategory transactionCategory; 
 
-    public TransactionCategory getFaqCategory() {
+    public TransactionCategory getTransactionCategory() {
         return transactionCategory;
     }
 
@@ -75,15 +76,16 @@ public class Transaction {
 
     ///
 
-    @Column(name = "transaction_on", columnDefinition = "int")
-    private int transactionOn;
+    @Column(name = "transaction_on", columnDefinition = "timestamp")
+    private Timestamp transactionOn;
 
-    public int getTransactionOn() {
+    public Timestamp getTransactionOn() {
         return transactionOn;
     }
 
-    public void setTransactionOn(int transactionOn) {
+    public void setTransactionOn(Timestamp transactionOn) {
         this.transactionOn = transactionOn;
-    }
+}
+
 
 }

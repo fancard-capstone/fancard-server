@@ -2,7 +2,7 @@ package com.FANCardPlus.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Transaction_category")
+@Table(name = "Transaction_category", schema="dbo")
 public class TransactionCategory {
 
     @Id
