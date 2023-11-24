@@ -33,31 +33,32 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> validateCredentials(@RequestBody User loginCredentials) {
+    public User validateCredentials(@RequestBody User loginCredentials) {
         String email = loginCredentials.getEmail();
         String password = loginCredentials.getPassword();
 
         // Check if the username and password are valid
-        boolean isValid = isValidCredentials(email, password);
+        Long isValid = isValidCredentials(email, password);
 
-        if (isValid) {
-            return ResponseEntity.ok("Credentials are valid");
+        if (isValid != null) {
+            User user = userRepository.findByUserId(isValid);
+            return user;
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return null;
         }
     }
 
-    private boolean isValidCredentials(String email, String password) {
+    private Long isValidCredentials(String email, String password) {
         User user = userRepository.findByEmail(email);
 
         if (user != null) {
             if (user.getPassword().equals(password)){
-                return true;
+                return user.getUserId();
             } else {
-                return false;
+                return null;
             }
         } else {
-            return false;
+            return null;
         }
     }
 
