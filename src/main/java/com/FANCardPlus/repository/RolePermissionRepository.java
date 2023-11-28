@@ -1,8 +1,11 @@
 package com.FANCardPlus.repository;
 
-import com.FANCardPlus.model.RolePermission;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.FANCardPlus.model.RolePermission;
+
 public interface RolePermissionRepository extends JpaRepository<RolePermission, Long> {
-    // Additional query methods if needed
+    List<RolePermission> findByPermissionPermissionId(Long permissionId);
 }
