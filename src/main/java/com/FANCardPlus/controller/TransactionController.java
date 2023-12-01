@@ -1,5 +1,6 @@
 package com.FANCardPlus.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,10 @@ public class TransactionController {
         TransactionCategory defaultCategory = transactionCategoryRepository.findById(1L).get();
 
         transaction.setTransactionCategory(defaultCategory);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        transaction.setTransactionOn(timestamp);
         
         if (checkUser.isPresent() && checkFacility.isPresent()) {
             if (hasPermission(checkUser.get(), checkFacility.get())) {
