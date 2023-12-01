@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FANCardPlus.model.Facility;
 import com.FANCardPlus.model.RolePermission;
 import com.FANCardPlus.model.Transaction;
+import com.FANCardPlus.model.TransactionCategory;
 import com.FANCardPlus.model.User;
 import com.FANCardPlus.model.UserRole;
 import com.FANCardPlus.repository.FacilityRepository;
@@ -67,6 +68,10 @@ public class TransactionController {
         // Optional<TransactionCategory> checkCategory = transactionCategoryRepository.findById(transaction.getTransactionCategory().getTansactionCategoryId());
         Optional<User> checkUser = userRepository.findById(transaction.getUser().getUserId());
         Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacility().getFacilityId());
+
+        TransactionCategory defaultCategory = transactionCategoryRepository.findById(1L).get();
+
+        transaction.setTransactionCategory(defaultCategory);
         
         if (checkUser.isPresent() && checkFacility.isPresent()) {
             if (hasPermission(checkUser.get(), checkFacility.get())) {
