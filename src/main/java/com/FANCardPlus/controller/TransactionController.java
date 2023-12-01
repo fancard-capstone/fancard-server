@@ -94,18 +94,21 @@ public class TransactionController {
     private boolean hasPermission(User user, Facility facility){
         Optional<UserRole> checkUserRole = userRoleRepository.findById(user.getUserId());
         List<RolePermission> checkPermission = rolePermissionRepository.findByPermissionPermissionId(facility.getPermission().getPermissionId());
-
         Boolean tempPermission = false;
+        Boolean tempUserActive = user.getIsActive();
 
-        for (int i = 0; i < checkPermission.size(); i++) {
-            if (checkUserRole.get().getRole() == checkPermission.get(i).getRole()) {
-                tempPermission = true;
-                break;
+        if (tempUserActive && checkUserRole.isPresent()) {
+            for (int i = 0; i < checkPermission.size(); i++) {
+                if (checkUserRole.get().getRole() == checkPermission.get(i).getRole()) {
+                    tempPermission = true;
+                    break;
+                }
             }
+
         }
 
         return tempPermission;
-    };
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Transaction>> getTransactionsByUser(@PathVariable Long userId) {
