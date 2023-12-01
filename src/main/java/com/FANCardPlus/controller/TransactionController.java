@@ -87,7 +87,7 @@ public class TransactionController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed due to no permission.");
             }
         } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed because user of facility does not exist.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed because user or facility does not exist.");
         }
     }
 
