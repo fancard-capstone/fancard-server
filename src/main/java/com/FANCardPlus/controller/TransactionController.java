@@ -70,7 +70,7 @@ public class TransactionController {
         Optional<User> checkUser = userRepository.findById(transaction.getUser().getUserId());
         Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacility().getFacilityId());
 
-        TransactionCategory defaultCategory = transactionCategoryRepository.findById(1L).get();
+        TransactionCategory defaultCategory = transactionCategoryRepository.findById(3L).get();
 
         transaction.setTransactionCategory(defaultCategory);
 
@@ -84,10 +84,10 @@ public class TransactionController {
                 transactionRepository.save(transaction);
                 return ResponseEntity.ok("Transaction added");
             } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed due to no permission.");
             }
         } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Transaction failed because user of facility does not exist.");
         }
     }
 
