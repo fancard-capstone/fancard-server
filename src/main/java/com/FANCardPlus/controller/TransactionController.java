@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FANCardPlus.model.Facility;
 import com.FANCardPlus.model.RolePermission;
 import com.FANCardPlus.model.Transaction;
-import com.FANCardPlus.model.TransactionCategory;
 import com.FANCardPlus.model.User;
 import com.FANCardPlus.model.UserRole;
 import com.FANCardPlus.repository.FacilityRepository;
@@ -63,14 +62,14 @@ public class TransactionController {
         return transactionRepository.findAll();
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<String> createTransactionByUser(@RequestBody Transaction transaction, @PathVariable Long userId) {
-        Optional<TransactionCategory> checkCategory = transactionCategoryRepository.findById(transaction.getTransactionCategory().getTansactionCategoryId());
-        Optional<User> checkUser = userRepository.findById(userId);
-        Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacility().getFacilityId()); 
+    @PostMapping
+    public ResponseEntity<String> createTransactionByUser(@RequestBody Transaction transaction) {
+        // Optional<TransactionCategory> checkCategory = transactionCategoryRepository.findById(transaction.getTransactionCategory().getTansactionCategoryId());
+        Optional<User> checkUser = userRepository.findById(transaction.getUser().getUserId());
+        Optional<Facility> checkFacility = facilityRepository.findById(transaction.getFacility().getFacilityId());
         
-        if (hasPermission(checkUser.get(), checkFacility.get())) {
-            if (checkUser.isPresent() && checkCategory.isPresent() && checkFacility.isPresent()) {
+        if (checkUser.isPresent() && checkFacility.isPresent()) {
+            if (hasPermission(checkUser.get(), checkFacility.get())) {
                 transaction.setUser(checkUser.get());
                 transactionRepository.save(transaction);
                 return ResponseEntity.ok("Transaction added");
@@ -85,13 +84,17 @@ public class TransactionController {
     private boolean hasPermission(User user, Facility facility){
         Optional<UserRole> checkUserRole = userRoleRepository.findById(user.getUserId());
         List<RolePermission> checkPermission = rolePermissionRepository.findByPermissionPermissionId(facility.getPermission().getPermissionId());
-        // System.out.println(checkPermission.getRole().getRoleId());
 
-        if (checkPermission.contains(checkUserRole.get())) {
-            return true;
-        } else {
-            return false;
+        Boolean tempPermission = false;
+
+        for (int i = 0; i < checkPermission.size(); i++) {
+            if (checkUserRole.get().getRole() == checkPermission.get(i).getRole()) {
+                tempPermission = true;
+                break;
+            }
         }
+
+        return tempPermission;
     };
 
     @GetMapping("/{userId}")

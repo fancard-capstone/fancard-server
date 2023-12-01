@@ -1,16 +1,21 @@
 package com.FANCardPlus.controller;
 
-import com.FANCardPlus.model.User;
-import com.FANCardPlus.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.FANCardPlus.model.User;
+import com.FANCardPlus.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/users")
@@ -77,17 +82,37 @@ public class UserController {
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
 
-            // Update user properties with values from the updatedUser
-            existingUser.setUserName(updatedUser.getUserName());
-            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
-            existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setAddress(updatedUser.getAddress());
-            existingUser.setPassword(updatedUser.getPassword());
-            existingUser.setFirstName(updatedUser.getFirstName());
-            existingUser.setLastName(updatedUser.getLastName());
-            existingUser.setImageUrl(updatedUser.getImageUrl());
-            existingUser.setIsActive(updatedUser.getIsActive());
-            existingUser.setNfcId(updatedUser.getNfcId());
+            if (updatedUser.getUserName() != null) {
+                existingUser.setUserName(updatedUser.getUserName());
+            }
+            if (updatedUser.getPhoneNumber() != null) {
+                existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+            }
+            if (updatedUser.getEmail() != null) {
+                existingUser.setEmail(updatedUser.getEmail());
+            }
+            if (updatedUser.getAddress() != null) {
+                existingUser.setAddress(updatedUser.getAddress());
+            }
+            if (updatedUser.getPassword() != null) {
+                existingUser.setPassword(updatedUser.getPassword());
+            }
+            if (updatedUser.getFirstName() != null) {
+                existingUser.setFirstName(updatedUser.getFirstName());
+            }
+            if (updatedUser.getLastName() != null) {
+                existingUser.setLastName(updatedUser.getLastName());
+            }
+            if (updatedUser.getImageUrl() != null) {
+                existingUser.setImageUrl(updatedUser.getImageUrl());
+            }
+            if (updatedUser.getIsActive() != null) {
+                existingUser.setIsActive(updatedUser.getIsActive());
+            }
+            if (updatedUser.getNfcId() != null) {
+                existingUser.setNfcId(updatedUser.getNfcId());
+            }
+
 
             User savedUser = userRepository.save(existingUser);
             return ResponseEntity.ok(savedUser);
