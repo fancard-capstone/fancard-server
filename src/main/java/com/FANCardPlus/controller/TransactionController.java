@@ -1,6 +1,7 @@
 package com.FANCardPlus.controller;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,6 +117,7 @@ public class TransactionController {
 
         if (user.isPresent()) {
             List<Transaction> transactionsByUser = transactionRepository.findByUser(user.get());
+            Collections.reverse(transactionsByUser);
             return ResponseEntity.ok(transactionsByUser);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
